@@ -30,8 +30,8 @@
     "tsup": "^8.5.1"
   },
   "peerDependencies": {
-    "circuit-json": "^0.0.422",
-    "circuit-json-to-gltf": "^0.0.97",
+    "circuit-json": "*",
+    "circuit-json-to-gltf": "*",
     "typescript": "^5"
   },
   "dependencies": {
