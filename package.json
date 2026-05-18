@@ -30,12 +30,12 @@
     "tsup": "^8.5.1"
   },
   "peerDependencies": {
+    "circuit-json": "^0.0.422",
+    "circuit-json-to-gltf": "^0.0.97",
     "typescript": "^5"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "circuit-json": "^0.0.422",
-    "circuit-json-to-gltf": "^0.0.97",
     "poppygl": "^0.0.20"
   }
 }
