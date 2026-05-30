@@ -1,6 +1,6 @@
 {
   "name": "circuit-json-to-3d-png",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Convert circuit-json designs into 3D PNG renders.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
