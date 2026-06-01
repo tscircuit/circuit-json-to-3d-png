@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test"
+import type { Page } from "@playwright/test"
 import type { AnyCircuitElement } from "circuit-json"
 import { execFile as execFileCallback } from "node:child_process"
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
@@ -52,7 +53,7 @@ async function buildBrowserBundle(bundlePath: string) {
   } catch (error) {
     throw new Error(
       `Browser bundle build failed:\n${
-        error instanceof Error ? error.stack ?? error.message : String(error)
+        error instanceof Error ? (error.stack ?? error.message) : String(error)
       }`,
     )
   }
@@ -127,7 +128,11 @@ async function startTestServer(options: {
 
 test("renderGLTFToPNGFromURL works in a browser bundle", async ({
   page,
+}: {
+  page: Page
 }) => {
+  test.setTimeout(120_000)
+
   const tempDir = await mkdtemp(
     path.join(os.tmpdir(), "circuit-json-to-3d-png-browser-"),
   )
@@ -151,9 +156,11 @@ test("renderGLTFToPNGFromURL works in a browser bundle", async ({
       const pageErrors: Error[] = []
       const consoleMessages: string[] = []
       page.on("pageerror", (error: unknown) => {
-        pageErrors.push(error instanceof Error ? error : new Error(String(error)))
+        pageErrors.push(
+          error instanceof Error ? error : new Error(String(error)),
+        )
       })
-      page.on("console", (message) => {
+      page.on("console", (message: { type(): string; text(): string }) => {
         consoleMessages.push(`[${message.type()}] ${message.text()}`)
       })
 
@@ -224,4 +231,4 @@ test("renderGLTFToPNGFromURL works in a browser bundle", async ({
   } finally {
     await rm(tempDir, { recursive: true, force: true })
   }
-}, { timeout: 120_000 })
+})
