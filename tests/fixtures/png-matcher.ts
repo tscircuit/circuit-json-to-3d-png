@@ -22,8 +22,8 @@ async function toMatchPngSnapshot(
     .replace(/\.test\.ts$/, "")
   const snapshotDir = path.join(path.dirname(testPath), "__snapshots__")
   const snapshotName = pngName
-    ? `${pngName}.snap.png`
-    : `${path.basename(testPath)}.snap.png`
+    ? pngName.replace(/\.snap\.png$/, ".png")
+    : `${path.basename(testPath)}.png`
   const filePath = path.join(snapshotDir, snapshotName)
 
   if (!fs.existsSync(snapshotDir)) {
@@ -111,7 +111,7 @@ async function toMatchPngSnapshot(
     }
 
     // If difference is too large, create diff image
-    const diffPath = filePath.replace(/\.snap\.png$/, ".diff.png")
+    const diffPath = filePath.replace(/\.png$/, ".diff.png")
     await looksSame.createDiff({
       reference: Buffer.from(existingSnapshot),
       current: Buffer.from(received),
@@ -127,7 +127,7 @@ async function toMatchPngSnapshot(
   }
 
   // Fallback if diffBounds isn't available
-  const diffPath = filePath.replace(/\.snap\.png$/, ".diff.png")
+  const diffPath = filePath.replace(/\.png$/, ".diff.png")
   await looksSame.createDiff({
     reference: Buffer.from(existingSnapshot),
     current: Buffer.from(received),
