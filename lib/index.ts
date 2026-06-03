@@ -92,14 +92,13 @@ export const renderCircuitJsonTo3dPng = async (
   circuitJson: AnyCircuitElement[],
   options: RenderCircuitJsonTo3dPngOptions = {},
 ): Promise<Uint8Array> => {
-  const [{ getBestCameraPosition }, { renderGLTFToPNGBufferFromGLBBuffer }] =
+  const [{ getBestCameraPosition }, { renderGLTFToPNGFromGLB }] =
     await Promise.all([loadCircuitJsonToGltf(), loadPoppyGl()])
   const glbBuffer = await convertCircuitJsonTo3dGlb(circuitJson, options)
   const glbArrayBuffer = await normalizeToArrayBuffer(glbBuffer)
   const defaultCamera = getBestCameraPosition(circuitJson)
-  const pngBuffer = await renderGLTFToPNGBufferFromGLBBuffer(
+  return renderGLTFToPNGFromGLB(
     glbArrayBuffer,
     getRenderCamera(circuitJson, defaultCamera, options),
   )
-  return normalizeToUint8Array(pngBuffer)
 }
