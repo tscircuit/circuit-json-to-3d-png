@@ -26,6 +26,11 @@ export type CircuitJson3dBaseOptions = {
 export type RenderCircuitJsonTo3dPngOptions = CircuitJson3dBaseOptions & {
   camera?: CameraOptions
   cameraPreset?: CameraPreset
+  width?: number
+  height?: number
+  backgroundColor?: string | readonly [number, number, number] | null
+  showInfiniteGrid?: boolean
+  supersampling?: number
 }
 
 const getRenderCamera = (
@@ -99,6 +104,26 @@ export const renderCircuitJsonTo3dPng = async (
   const defaultCamera = getBestCameraPosition(circuitJson)
   return renderGLTFToPNGFromGLB(
     glbArrayBuffer,
-    getRenderCamera(circuitJson, defaultCamera, options),
+    {
+      ...getRenderCamera(circuitJson, defaultCamera, options),
+      ...(options.width != null ? { width: options.width } : {}),
+      ...(options.height != null ? { height: options.height } : {}),
+      ...(options.backgroundColor !== undefined
+        ? { backgroundColor: options.backgroundColor }
+        : {}),
+      ...(options.supersampling != null
+        ? { supersampling: options.supersampling }
+        : {}),
+      ...(options.showInfiniteGrid
+        ? {
+            grid: {
+              infiniteGrid: true,
+              gridColor: [0.9, 0.9, 0.9] as const,
+              sectionColor: [0.7, 0.7, 0.9] as const,
+              offset: { y: 0 },
+            },
+          }
+        : {}),
+    },
   )
 }
