@@ -35,6 +35,7 @@
  "peerDependencies": {
     "circuit-json": "*",
     "circuit-json-to-gltf": "*",
+    "format-si-unit": "*",
     "typescript": "^5"
   },
   "dependencies": {
