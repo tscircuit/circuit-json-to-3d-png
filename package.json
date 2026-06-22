@@ -26,14 +26,14 @@
     "@biomejs/biome": "^2.4.14",
     "@types/bun": "latest",
     "@playwright/test": "^1.60.0",
+    "circuit-json": "0.0.431",
     "circuit-json-to-connectivity-map": "^0.0.23",
+    "circuit-json-to-gltf": "0.0.106",
     "looks-same": "^10.0.1",
     "schematic-symbols": "^0.0.17",
     "tsup": "^8.5.1"
   },
   "peerDependencies": {
-    "circuit-json": "*",
-    "circuit-json-to-gltf": "*",
     "typescript": "^5"
   },
   "dependencies": {

@@ -102,28 +102,25 @@ export const renderCircuitJsonTo3dPng = async (
   const glbBuffer = await convertCircuitJsonTo3dGlb(circuitJson, options)
   const glbArrayBuffer = await normalizeToArrayBuffer(glbBuffer)
   const defaultCamera = getBestCameraPosition(circuitJson)
-  return renderGLTFToPNGFromGLB(
-    glbArrayBuffer,
-    {
-      ...getRenderCamera(circuitJson, defaultCamera, options),
-      ...(options.width != null ? { width: options.width } : {}),
-      ...(options.height != null ? { height: options.height } : {}),
-      ...(options.backgroundColor !== undefined
-        ? { backgroundColor: options.backgroundColor }
-        : {}),
-      ...(options.supersampling != null
-        ? { supersampling: options.supersampling }
-        : {}),
-      ...(options.showInfiniteGrid
-        ? {
-            grid: {
-              infiniteGrid: true,
-              gridColor: [0.9, 0.9, 0.9] as const,
-              sectionColor: [0.7, 0.7, 0.9] as const,
-              offset: { y: 0 },
-            },
-          }
-        : {}),
-    },
-  )
+  return renderGLTFToPNGFromGLB(glbArrayBuffer, {
+    ...getRenderCamera(circuitJson, defaultCamera, options),
+    ...(options.width != null ? { width: options.width } : {}),
+    ...(options.height != null ? { height: options.height } : {}),
+    ...(options.backgroundColor !== undefined
+      ? { backgroundColor: options.backgroundColor }
+      : {}),
+    ...(options.supersampling != null
+      ? { supersampling: options.supersampling }
+      : {}),
+    ...(options.showInfiniteGrid
+      ? {
+          grid: {
+            infiniteGrid: true,
+            gridColor: [0.9, 0.9, 0.9] as const,
+            sectionColor: [0.7, 0.7, 0.9] as const,
+            offset: { y: 0 },
+          },
+        }
+      : {}),
+  })
 }
