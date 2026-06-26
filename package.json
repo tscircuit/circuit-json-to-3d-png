@@ -1,6 +1,6 @@
 {
   "name": "circuit-json-to-3d-png",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Convert circuit-json designs into 3D PNG renders.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -32,7 +32,7 @@
     "schematic-symbols": "^0.0.17",
     "tsup": "^8.5.1"
   },
- "peerDependencies": {
+  "peerDependencies": {
     "circuit-json": "*",
     "circuit-json-to-gltf": "*",
     "format-si-unit": "*",
