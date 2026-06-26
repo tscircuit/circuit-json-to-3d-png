@@ -33,6 +33,10 @@ export type RenderCircuitJsonTo3dPngOptions = CircuitJson3dBaseOptions & {
   supersampling?: number
 }
 
+const INFINITE_GRID_COLOR = [0.9, 0.9, 0.9] as const
+const INFINITE_GRID_SECTION_COLOR = [0.7, 0.7, 0.9] as const
+const INFINITE_GRID_OFFSET = { y: 0 } as const
+
 const getRenderCamera = (
   circuitJson: AnyCircuitElement[],
   defaultCamera: CameraOptions,
@@ -116,9 +120,9 @@ export const renderCircuitJsonTo3dPng = async (
       ? {
           grid: {
             infiniteGrid: true,
-            gridColor: [0.9, 0.9, 0.9] as const,
-            sectionColor: [0.7, 0.7, 0.9] as const,
-            offset: { y: 0 },
+            gridColor: INFINITE_GRID_COLOR,
+            sectionColor: INFINITE_GRID_SECTION_COLOR,
+            offset: INFINITE_GRID_OFFSET,
           },
         }
       : {}),
