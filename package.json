@@ -27,7 +27,7 @@
     "@types/bun": "latest",
     "@playwright/test": "^1.60.0",
     "circuit-json-to-connectivity-map": "^0.0.23",
-    "circuit-json-to-gltf": "0.0.106",
+    "circuit-json-to-gltf": "^0.0.108",
     "looks-same": "^10.0.1",
     "schematic-symbols": "^0.0.17",
     "tsup": "^8.5.1"
