@@ -1,6 +1,10 @@
 {
   "name": "circuit-json-to-3d-png",
   "version": "0.0.10",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tscircuit/circuit-json-to-3d-png.git"
+  },
   "description": "Convert circuit-json designs into 3D PNG renders.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
