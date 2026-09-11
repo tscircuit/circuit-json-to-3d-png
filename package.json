@@ -38,7 +38,7 @@
   },
   "peerDependencies": {
     "circuit-json": "*",
-    "circuit-json-to-gltf": ">=0.0.124",
+    "circuit-json-to-gltf": "*",
     "format-si-unit": "*",
     "typescript": "^5"
   },
