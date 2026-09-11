@@ -31,14 +31,14 @@
     "@types/bun": "latest",
     "@playwright/test": "^1.60.0",
     "circuit-json-to-connectivity-map": "^0.0.23",
-    "circuit-json-to-gltf": "^0.0.111",
+    "circuit-json-to-gltf": "^0.0.124",
     "looks-same": "^10.0.1",
     "schematic-symbols": "^0.0.17",
     "tsup": "^8.5.1"
   },
   "peerDependencies": {
     "circuit-json": "*",
-    "circuit-json-to-gltf": "*",
+    "circuit-json-to-gltf": ">=0.0.124",
     "format-si-unit": "*",
     "typescript": "^5"
   },
