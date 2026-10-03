@@ -44,6 +44,6 @@
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "poppygl": "^0.0.24"
+    "poppygl": "^0.0.30"
   }
 }
