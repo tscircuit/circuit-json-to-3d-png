@@ -41,7 +41,10 @@ const toFileUrl = (value: string): string => {
     ? `/${normalizedPath}`
     : normalizedPath
 
-  return new URL(`file://${encodeURI(pathname)}`).href
+  const encodedPath = encodeURI(pathname)
+    .replace(/#/g, "%23")
+    .replace(/\?/g, "%3F")
+  return new URL(`file://${encodedPath}`).href
 }
 
 const toDirectoryUrl = (value: string): string => {
