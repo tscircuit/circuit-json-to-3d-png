@@ -32,6 +32,15 @@ const png = await renderCircuitJsonTo3dPng(circuitJson, {
 - `camera`
 - `cameraPreset`
 
+Default and preset cameras fit the exported geometry, including tall or
+off-board parts, at the requested image aspect ratio. Existing framing is kept
+when it already contains the scene. An explicit `camera` is never adjusted.
+
+`getDefaultCameraForCircuitJson(circuitJson, options?)` uses the same fit. It now
+loads models to measure their actual bounds; pass `modelPathBaseDir`,
+`projectBaseUrl`, or `authHeaders` as for rendering when needed. Its optional
+`width`, `height`, and `cameraPreset` match the intended render.
+
 ## Package contents
 
 The published package ships compiled ESM output from `dist/` plus TypeScript declarations.
