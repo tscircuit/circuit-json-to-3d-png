@@ -32,6 +32,9 @@ const png = await renderCircuitJsonTo3dPng(circuitJson, {
 - `camera`
 - `cameraPreset`
 
+For large imported OBJ models, use `circuit-json-to-gltf` 0.0.133 or later.
+Earlier versions can overflow 16-bit mesh indices and distort the geometry.
+
 ## Package contents
 
 The published package ships compiled ESM output from `dist/` plus TypeScript declarations.
