@@ -1,0 +1,186 @@
+{
+  "repository": "https://github.com/AnasSarkiz/NEMA11_RP2040",
+  "commit": "1266cf8bb55ba6ee868af4f26fc2980d68fd3b32",
+  "root": "boards/nema11-rp2040-two-layer--20261022-a1",
+  "circuitJson": "dist/assembly-preview/circuit.json",
+  "records": 4212,
+  "cadComponents": 90,
+  "files": {
+    "dist/assembly-preview/circuit.json": {
+      "bytes": 2011729,
+      "sha256": "bae418ea862b7cfa21ef5b9d29fa185d824bacd7021dd87b79afefb7fe67713a"
+    },
+    "imports/A4988SETTR_T/A4988SETTR_T.obj": {
+      "bytes": 80209,
+      "sha256": "01eb47f12909a50a9f70825ab23b31c6be4b33ffe26bd7c8697f94077b87ebd9"
+    },
+    "imports/ABM8_272_T3/ABM8_272_T3.obj": {
+      "bytes": 133015,
+      "sha256": "4b75001f08c9e627eb8c88ca2c599b8b278cbe76d399495cfd15b2fc366c45a7"
+    },
+    "imports/AP63203WU_7/AP63203WU_7.obj": {
+      "bytes": 82763,
+      "sha256": "6bf633f38ffa66eddae4e52f2e0134e27604a77f2e70a2a65f73e02b6c5d5d69"
+    },
+    "imports/A_0402CG150J500NT/A_0402CG150J500NT.obj": {
+      "bytes": 55992,
+      "sha256": "11ff3d0e00ddf06caa7ba9e7a4127aa407425d2dbeb9d33203f865f52a44590d"
+    },
+    "imports/A_0402WGF1001TCE/A_0402WGF1001TCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0402WGF1002TCE/A_0402WGF1002TCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0402WGF1003TCE/A_0402WGF1003TCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0402WGF270JTCE/A_0402WGF270JTCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0402WGF3300TCE/A_0402WGF3300TCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0402WGF4701TCE/A_0402WGF4701TCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0402WGF5101TCE/A_0402WGF5101TCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0402WGF5602TCE/A_0402WGF5602TCE.obj": {
+      "bytes": 18730,
+      "sha256": "658e8980a1ff78ad44b1f30b6de0c63023cfd0b883902f3c1333902984d7bfe4"
+    },
+    "imports/A_0603WAF0000T5E/A_0603WAF0000T5E.obj": {
+      "bytes": 78929,
+      "sha256": "6fc2f81a61e2fefd1edbcd85a273d04530b3c25f0a35ea9abb254bf5b47f6f94"
+    },
+    "imports/A_0603WAF1002T5E/A_0603WAF1002T5E.obj": {
+      "bytes": 78929,
+      "sha256": "6fc2f81a61e2fefd1edbcd85a273d04530b3c25f0a35ea9abb254bf5b47f6f94"
+    },
+    "imports/A_0603WAF2002T5E/A_0603WAF2002T5E.obj": {
+      "bytes": 78929,
+      "sha256": "6fc2f81a61e2fefd1edbcd85a273d04530b3c25f0a35ea9abb254bf5b47f6f94"
+    },
+    "imports/B4B_PH_K_S_LF__SN_/B4B_PH_K_S_LF__SN_.obj": {
+      "bytes": 203317,
+      "sha256": "333d51fc2722f28c1a73c3ef4b240453d4ce90bba01e4b2a7b6d8c059fa62d0f"
+    },
+    "imports/B5819W_SL/B5819W_SL.obj": {
+      "bytes": 61981,
+      "sha256": "7c8e2c97e9b3e5c32c1eca57a40e13681407e988333317e3024a8635b37b7344"
+    },
+    "imports/CH224Q/CH224Q.obj": {
+      "bytes": 48670,
+      "sha256": "a67edc88634f47ee485ef4b97c076d2dfce1b8c041e95ee7d48582c12ab85512"
+    },
+    "imports/CL05A105KA5NQNC/CL05A105KA5NQNC.obj": {
+      "bytes": 55992,
+      "sha256": "11ff3d0e00ddf06caa7ba9e7a4127aa407425d2dbeb9d33203f865f52a44590d"
+    },
+    "imports/CL05B103KB5NNNC/CL05B103KB5NNNC.obj": {
+      "bytes": 55992,
+      "sha256": "11ff3d0e00ddf06caa7ba9e7a4127aa407425d2dbeb9d33203f865f52a44590d"
+    },
+    "imports/CL05B104KB5NNNC/CL05B104KB5NNNC.obj": {
+      "bytes": 55992,
+      "sha256": "11ff3d0e00ddf06caa7ba9e7a4127aa407425d2dbeb9d33203f865f52a44590d"
+    },
+    "imports/CL05B104KO5NNNC/CL05B104KO5NNNC.obj": {
+      "bytes": 55992,
+      "sha256": "11ff3d0e00ddf06caa7ba9e7a4127aa407425d2dbeb9d33203f865f52a44590d"
+    },
+    "imports/CL10A105KB8NNNC/CL10A105KB8NNNC.obj": {
+      "bytes": 57506,
+      "sha256": "3af4d2000750b3be8149bdf53d8b14743d96fc20c1c8a963704802ada85759f2"
+    },
+    "imports/CL10A106KP8NNNC/CL10A106KP8NNNC.obj": {
+      "bytes": 57506,
+      "sha256": "3af4d2000750b3be8149bdf53d8b14743d96fc20c1c8a963704802ada85759f2"
+    },
+    "imports/CL10B103KB8NNNC/CL10B103KB8NNNC.obj": {
+      "bytes": 57506,
+      "sha256": "3af4d2000750b3be8149bdf53d8b14743d96fc20c1c8a963704802ada85759f2"
+    },
+    "imports/CL10B224KA8NNNC/CL10B224KA8NNNC.obj": {
+      "bytes": 57506,
+      "sha256": "3af4d2000750b3be8149bdf53d8b14743d96fc20c1c8a963704802ada85759f2"
+    },
+    "imports/CL21A226MAQNNNE/CL21A226MAQNNNE.obj": {
+      "bytes": 57153,
+      "sha256": "a6ecf4d78195d1f061b045e187fdff13726b03dc2475a4f11803b44d86adebc1"
+    },
+    "imports/CL31A106KBHNNNE/CL31A106KBHNNNE.obj": {
+      "bytes": 120447,
+      "sha256": "d725fdbb4ab326035448275626e2022faef2bcdf473e3b7654e25f6308d096c0"
+    },
+    "imports/DMN2300UFB4_7B/DMN2300UFB4_7B.obj": {
+      "bytes": 49468,
+      "sha256": "310882fefbe8a4a1b7b28b691a8221ef7033e0392c7fc15bc6f78f75b555c3a2"
+    },
+    "imports/GD25Q16EEIGR/GD25Q16EEIGR.obj": {
+      "bytes": 86770,
+      "sha256": "a0a193afc869824c333a2720df80d5266114ac8f11734b8a5ef0e93a325f83ed"
+    },
+    "imports/HP05W3F240LT5E/HP05W3F240LT5E.obj": {
+      "bytes": 18763,
+      "sha256": "6bbe05c8bf2262e8c377c9a7cb422b1725e8842352dcd40bc47f3a573bb08a84"
+    },
+    "imports/LTST_C19HE1WT/LTST_C19HE1WT.obj": {
+      "bytes": 34547,
+      "sha256": "91d2ed9dbc575337fd7846c7fffc5d6380171764896dfc49ed433cf571c81d1b"
+    },
+    "imports/MLT_5020/MLT_5020.obj": {
+      "bytes": 35677,
+      "sha256": "bb843b8f6a60474d75146187d2a08d8d5c8e1ac4b9e2ff4331cc13beef10191a"
+    },
+    "imports/PMEG6020ELRX/PMEG6020ELRX.obj": {
+      "bytes": 24608,
+      "sha256": "d4efac8e5f91e7bb3c860ee095f910ec9311d50abfa025c11df78c7d0d134fb3"
+    },
+    "imports/RP2040/RP2040.obj": {
+      "bytes": 167735,
+      "sha256": "a3a668d5b1ab3b8962838676908b1a52503a1374525738f51d09eef15bbcd39e"
+    },
+    "imports/RVT1V470M0605/RVT1V470M0605.obj": {
+      "bytes": 171757,
+      "sha256": "c2f7aa7cd71a979dfeda7f8834d57e7bc89a1a551214fb36539b6e2a07d00d5f"
+    },
+    "imports/SMF18A/SMF18A.obj": {
+      "bytes": 41142,
+      "sha256": "da7ea2615c07f6b32365b75ea560ce49a73847950b28adc2758b09e13fab6d3a"
+    },
+    "imports/SRN4018_4R7M/SRN4018_4R7M.obj": {
+      "bytes": 296904,
+      "sha256": "108e122d483c901c50656619eb0b126d30b2570239c220269cf2ff7b06bb5103"
+    },
+    "imports/TMP102AIDRLR/TMP102AIDRLR.obj": {
+      "bytes": 104973,
+      "sha256": "bc86540062da17394ffedde912df61cf4e9388c732bf220ad4f3237430ae3c59"
+    },
+    "imports/TYPE_C_31_M_12/TYPE_C_31_M_12.obj": {
+      "bytes": 677525,
+      "sha256": "9d7e957178f20137fdd5d62ae84281fe3b5bb3a44262f348d8e129b0a4182320"
+    },
+    "imports/USBLC6_2SC6/USBLC6_2SC6.obj": {
+      "bytes": 565628,
+      "sha256": "b4a68fd1399fd2ab9e7baf51fd4bb6dd8b2a8be45c2b632e1f2c84723c5d7e45"
+    },
+    "imports/XL_1608SURC_06/XL_1608SURC_06.obj": {
+      "bytes": 42469,
+      "sha256": "48b853b32050e3b0fe52d090b0c82f45539d9917a32d294915d0ef32bb8fbbee"
+    },
+    "references/motor-assets/11HS12-0674S.obj": {
+      "bytes": 2134747,
+      "sha256": "c39b0649babb9bdc0a37033344ef9249c53a7caf53b17f2adc587f39237c083b"
+    }
+  }
+}

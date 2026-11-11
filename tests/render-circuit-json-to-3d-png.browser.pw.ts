@@ -14,6 +14,7 @@ type BrowserRenderResult = {
   byteLength: number
   signature: number[]
   isUint8Array: boolean
+  sceneRenderByteLength: number
 }
 
 const execFile = promisify(execFileCallback)
@@ -224,6 +225,7 @@ test("renderGLTFToPNGFromURL works in a browser bundle", async ({
       expect(result).toBeDefined()
       expect(result?.isUint8Array).toBe(true)
       expect(result?.byteLength).toBeGreaterThan(0)
+      expect(result?.sceneRenderByteLength).toBeGreaterThan(0)
       expect(result?.signature).toEqual([0x89, 0x50, 0x4e, 0x47])
     } finally {
       await server.close()
