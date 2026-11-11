@@ -15,7 +15,8 @@ framing only. It does not approve mounting, insulation, routing or manufacture.
 `manifest.json` pins the public repository commit, paths, sizes and SHA-256
 checksums of the native Circuit JSON and 43 distinct OBJ files. The inputs are
 about 8.2 MB total. Tests download these immutable URLs once per process, with
-up to eight simultaneous requests. A missing file or different checksum fails
+up to eight simultaneous requests and at most three attempts per URL.
+A missing file or different checksum fails
 explicitly; there is no fallback shape or silently skipped model.
 
 The source repository does not declare a redistribution license for its OEM
