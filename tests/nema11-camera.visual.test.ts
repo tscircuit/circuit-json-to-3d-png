@@ -28,6 +28,28 @@ for (const [name, width, height] of [
     try {
       const { gltf, resources } = await loadGLTFWithResourcesFromURL(url)
       const scene = createSceneFromGLTF(gltf, resources)
+      // The original exporter wrapped the genuine motor's indices at 65,536.
+      // Require the published 32-bit-index fix, not a visual-only workaround.
+      let largePrimitives = 0
+      for (const mesh of gltf.meshes ?? []) {
+        for (const primitive of mesh.primitives) {
+          if (gltf.accessors[primitive.attributes.POSITION].count <= 65_536)
+            continue
+          largePrimitives++
+          expect(gltf.accessors[primitive.indices].componentType).toBe(5125)
+        }
+      }
+      expect(largePrimitives).toBeGreaterThan(0)
+      for (const draw of scene.drawCalls) {
+        if (draw.positions.length / 3 <= 65_536) continue
+        expect(draw.indices).not.toBeNull()
+        const maxIndex = draw.indices!.reduce(
+          (max, index) => Math.max(max, index),
+          0,
+        )
+        expect(maxIndex).toBeGreaterThan(65_535)
+        expect(maxIndex).toBeLessThan(draw.positions.length / 3)
+      }
       const camera = await getDefaultCameraForCircuitJson(circuit)
       const { view, proj } = buildCamera(
         scene.drawCalls,

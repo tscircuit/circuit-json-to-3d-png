@@ -10,6 +10,14 @@ The PCB and motor are in the source's **10 mm exploded inspection pose**, not a
 validated mounting stack or fabrication-ready board. This test is about camera
 framing only. It does not approve mounting, insulation, routing or manufacture.
 
+## Exporter version
+
+Both sides use circuit-json-to-gltf 0.0.133, the first published version fixing
+16-bit index overflow in large imported OBJ meshes. The genuine motor has
+154,620 vertices; earlier versions rendered its wrapped indices as distorted
+triangles. The test checks 32-bit index accessors and indices above 65,535.
+No exporter patch or model repair is applied here.
+
 ## Sources and licensing
 
 `manifest.json` pins the public repository commit, paths, sizes and SHA-256
