@@ -16,7 +16,9 @@ const cross = (a: Vector, b: Vector): Vector => [
 /** Fit actual transformed vertices, not the empty corners of a world AABB.
  * Preserve the camera direction/FOV and match PoppyGL's Y-up perspective.
  * Frustum side constraints are linear in camera-space x/y/z, so one pass finds
- * the closest eye and an off-center target with a 5% margin on each side.
+ * the closest eye and an off-center target with at least 5% margin per side
+ * when refitting is needed. Already-fitting cameras are returned unchanged,
+ * even when their existing margin is smaller than 5%.
  */
 export function fitCameraToScene(
   drawCalls: readonly Pick<DrawCall, "positions" | "model">[],

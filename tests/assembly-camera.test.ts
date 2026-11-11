@@ -3,7 +3,7 @@ import { buildCamera, renderGLTFToPNGFromGLB, type GLTFScene } from "poppygl"
 import {
   CAMERA_PRESET_NAMES,
   convertCircuitJsonTo3dGlb,
-  getDefaultCameraForCircuitJson,
+  getAssemblyCameraForCircuitJson,
   renderCircuitJsonTo3dPng,
 } from "../lib"
 import { fitCameraToScene } from "../lib/fit-camera-to-scene"
@@ -36,7 +36,7 @@ for (const [width, height] of [
 ] as const) {
   for (const preset of [undefined, ...CAMERA_PRESET_NAMES]) {
     test(`all assembly vertices fit ${width}x${height}, ${preset ?? "default"}`, async () => {
-      const camera = await getDefaultCameraForCircuitJson(tallAssembly, {
+      const camera = await getAssemblyCameraForCircuitJson(tallAssembly, {
         width,
         height,
         cameraPreset: preset,
@@ -121,6 +121,20 @@ test("scene fitting preserves sufficient cameras and handles unusable inputs", (
   expect(fitCameraToScene([draw], poleCamera, 1)).toBe(poleCamera)
 })
 
+test("already-fitting views retain margins smaller than five percent", () => {
+  const camera = { camPos: [0, 0, 10], lookAt: [0, 0, 0], fov: 90 } as const
+  const draw = {
+    positions: new Float32Array([-9.8, 0, 0, 9.8, 0, 0]),
+    model: identity,
+  }
+  const fitted = fitCameraToScene([draw], camera, 1)
+  expect(fitted).toBe(camera)
+  const ndcX =
+    draw.positions[3]! /
+    (camera.camPos[2] * Math.tan((camera.fov * Math.PI) / 360))
+  expect((1 - ndcX) / 2).toBeCloseTo(0.01, 5)
+})
+
 test("diagonal geometry fits tightly without fitting empty AABB corners", () => {
   const draw = {
     positions: new Float32Array([-10, -10, 10, 10, 10, -10]),
@@ -165,7 +179,7 @@ test("model-only and translated assemblies fit their actual vertices", async () 
   for (const circuit of [modelOnly, translated]) {
     const mesh = await convertCircuitJsonTo3dGlb(circuit)
     const scene = await loadGlbScene(mesh.slice().buffer)
-    const camera = await getDefaultCameraForCircuitJson(circuit, {
+    const camera = await getAssemblyCameraForCircuitJson(circuit, {
       width: 320,
       height: 480,
     })

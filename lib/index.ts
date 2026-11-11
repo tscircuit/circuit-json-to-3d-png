@@ -73,10 +73,22 @@ const getConversionOptions = (
     : {}),
 })
 
-/** Fit the rendered assembly, including imported models. Conversion options
- * resolve model URLs just as in renderCircuitJsonTo3dPng; size controls aspect.
+/** Lightweight metadata-only estimate. Does not fetch or process CAD models.
+ * Imported/tall/off-board geometry may extend outside this camera.
  */
-export const getDefaultCameraForCircuitJson = async (
+export const getDefaultCameraForCircuitJson = (
+  circuitJson: AnyCircuitElement[],
+): Promise<CameraOptions> =>
+  loadCircuitJsonToGltf().then(({ getBestCameraPosition }) =>
+    getBestCameraPosition(circuitJson),
+  )
+
+/** Explicit assembly-aware calculation: exports the full GLB and loads models.
+ * This is substantially more expensive than getDefaultCameraForCircuitJson.
+ * For a PNG, call renderCircuitJsonTo3dPng directly; it reuses its loaded scene.
+ * Conversion options resolve model URLs, and dimensions control aspect ratio.
+ */
+export const getAssemblyCameraForCircuitJson = async (
   circuitJson: AnyCircuitElement[],
   options: CircuitJson3dBaseOptions & {
     width?: number

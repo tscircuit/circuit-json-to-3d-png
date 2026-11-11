@@ -6,7 +6,7 @@ import {
 } from "poppygl"
 import {
   convertCircuitJsonTo3dGlb,
-  getDefaultCameraForCircuitJson,
+  getAssemblyCameraForCircuitJson,
   renderCircuitJsonTo3dPng,
 } from "../lib"
 import "./fixtures/png-matcher"
@@ -50,7 +50,7 @@ for (const [name, width, height] of [
         expect(maxIndex).toBeGreaterThan(65_535)
         expect(maxIndex).toBeLessThan(draw.positions.length / 3)
       }
-      const camera = await getDefaultCameraForCircuitJson(circuit, {
+      const camera = await getAssemblyCameraForCircuitJson(circuit, {
         width,
         height,
       })
