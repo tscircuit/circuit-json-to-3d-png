@@ -28,6 +28,28 @@ for (const [name, width, height] of [
     try {
       const { gltf, resources } = await loadGLTFWithResourcesFromURL(url)
       const scene = createSceneFromGLTF(gltf, resources)
+      // The original exporter wrapped the genuine motor's indices at 65,536.
+      // Require the published 32-bit-index fix, not a visual-only workaround.
+      let largePrimitives = 0
+      for (const mesh of gltf.meshes ?? []) {
+        for (const primitive of mesh.primitives) {
+          if (gltf.accessors[primitive.attributes.POSITION].count <= 65_536)
+            continue
+          largePrimitives++
+          expect(gltf.accessors[primitive.indices].componentType).toBe(5125)
+        }
+      }
+      expect(largePrimitives).toBeGreaterThan(0)
+      for (const draw of scene.drawCalls) {
+        if (draw.positions.length / 3 <= 65_536) continue
+        expect(draw.indices).not.toBeNull()
+        const maxIndex = draw.indices!.reduce(
+          (max, index) => Math.max(max, index),
+          0,
+        )
+        expect(maxIndex).toBeGreaterThan(65_535)
+        expect(maxIndex).toBeLessThan(draw.positions.length / 3)
+      }
       const camera = await getDefaultCameraForCircuitJson(circuit, {
         width,
         height,
@@ -40,6 +62,7 @@ for (const [name, width, height] of [
         camera.camPos,
         camera.lookAt,
       )
+      const projected = [Infinity, Infinity, -Infinity, -Infinity]
       let outside = 0
       let vertices = 0
       for (const draw of scene.drawCalls) {
@@ -61,14 +84,29 @@ for (const [name, width, height] of [
             clip.slice(0, 3).some((v) => Math.abs(v) > clip[3]!)
           )
             outside++
+          const x = clip[0]! / clip[3]!
+          const y = clip[1]! / clip[3]!
+          projected[0] = Math.min(projected[0]!, x)
+          projected[1] = Math.min(projected[1]!, y)
+          projected[2] = Math.max(projected[2]!, x)
+          projected[3] = Math.max(projected[3]!, y)
           vertices++
         }
       }
       expect(vertices).toBeGreaterThan(500_000)
       // Every actual exported vertex must fit, including the original motor leads.
       expect(outside).toBe(0)
+      // At least one dimension fills 90% of the image, with all sides inset.
+      const fill =
+        Math.max(projected[2]! - projected[0]!, projected[3]! - projected[1]!) /
+        2
+      expect(fill).toBeGreaterThan(0.89)
+      expect(Math.max(...projected.map(Math.abs))).toBeLessThan(0.901)
       console.log(
         `NEMA11 ${name}: ${outside}/${vertices} vertices outside camera`,
+      )
+      console.log(
+        `NEMA11 ${name} projected bounds: ${JSON.stringify(projected)}`,
       )
       const png = await renderCircuitJsonTo3dPng(circuit, {
         width,

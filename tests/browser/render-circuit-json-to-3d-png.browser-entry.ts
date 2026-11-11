@@ -1,11 +1,6 @@
-import {
-  renderGLTFToPNGFromURL,
-  renderSceneFromGLTF,
-  encodePNG,
-  computeWorldAABB,
-} from "poppygl"
+import { renderGLTFToPNGFromURL, renderSceneFromGLTF, encodePNG } from "poppygl"
 import { loadGlbScene } from "../../lib/load-glb-scene"
-import { fitCameraToBounds } from "../../lib/fit-camera-to-bounds"
+import { fitCameraToScene } from "../../lib/fit-camera-to-scene"
 
 type BrowserRenderResult = {
   byteLength: number
@@ -22,8 +17,8 @@ const png = await renderGLTFToPNGFromURL("/fixture.glb")
 const scene = await loadGlbScene(
   await (await fetch("/fixture.glb")).arrayBuffer(),
 )
-const camera = fitCameraToBounds(
-  computeWorldAABB(scene.drawCalls),
+const camera = fitCameraToScene(
+  scene.drawCalls,
   {
     camPos: [10, 10, 10],
     lookAt: [0, 0, 0],

@@ -9,7 +9,7 @@ import { normalizeToArrayBuffer, normalizeToUint8Array } from "./binary-utils"
 import { loadCircuitJsonToGltf, loadPoppyGl } from "./load-modules"
 import { normalizeModelUrls } from "./model-paths"
 import { loadGlbScene } from "./load-glb-scene"
-import { fitCameraToBounds } from "./fit-camera-to-bounds"
+import { fitCameraToScene } from "./fit-camera-to-scene"
 import type { GLTFScene } from "poppygl"
 
 export type { CameraOptions, CameraPreset }
@@ -49,10 +49,8 @@ const getRenderCamera = async (
     return options.camera
   }
 
-  const [
-    { getBestCameraPosition },
-    { computeWorldAABB, getDefaultRenderOptions },
-  ] = await Promise.all([loadCircuitJsonToGltf(), loadPoppyGl()])
+  const [{ getBestCameraPosition }, { getDefaultRenderOptions }] =
+    await Promise.all([loadCircuitJsonToGltf(), loadPoppyGl()])
   const defaultCamera = getBestCameraPosition(circuitJson)
   const camera = options.cameraPreset
     ? applyCameraPreset(options.cameraPreset, defaultCamera)
@@ -60,11 +58,7 @@ const getRenderCamera = async (
   const defaults = getDefaultRenderOptions()
   const width = options.width ?? defaults.width
   const height = options.height ?? defaults.height
-  return fitCameraToBounds(
-    computeWorldAABB(scene.drawCalls),
-    camera,
-    width / height,
-  )
+  return fitCameraToScene(scene.drawCalls, camera, width / height)
 }
 
 const getConversionOptions = (

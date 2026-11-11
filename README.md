@@ -34,7 +34,9 @@ const png = await renderCircuitJsonTo3dPng(circuitJson, {
 
 Default and preset cameras fit the exported geometry, including tall or
 off-board parts, at the requested image aspect ratio. Existing framing is kept
-when it already contains the scene. An explicit `camera` is never adjusted.
+when it already contains the scene. Otherwise, fitting uses the actual transformed
+vertices with a 5% image margin on each side, rather than empty world-bounds corners.
+An explicit `camera` is never adjusted.
 
 `getDefaultCameraForCircuitJson(circuitJson, options?)` uses the same fit. It now
 loads models to measure their actual bounds; pass `modelPathBaseDir`,

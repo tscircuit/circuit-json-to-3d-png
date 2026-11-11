@@ -1,17 +1,12 @@
 import { beforeAll, expect, test } from "bun:test"
-import {
-  buildCamera,
-  computeWorldAABB,
-  renderGLTFToPNGFromGLB,
-  type GLTFScene,
-} from "poppygl"
+import { buildCamera, renderGLTFToPNGFromGLB, type GLTFScene } from "poppygl"
 import {
   CAMERA_PRESET_NAMES,
   convertCircuitJsonTo3dGlb,
   getDefaultCameraForCircuitJson,
   renderCircuitJsonTo3dPng,
 } from "../lib"
-import { fitCameraToBounds } from "../lib/fit-camera-to-bounds"
+import { fitCameraToScene } from "../lib/fit-camera-to-scene"
 import { loadGlbScene } from "../lib/load-glb-scene"
 import { tallAssembly } from "./fixtures/tall-assembly"
 
@@ -97,24 +92,58 @@ test("custom cameras keep identical native rendering, even if intentionally crop
   expect(await convertCircuitJsonTo3dGlb(tallAssembly)).toEqual(glb)
 }, 60_000)
 
-test("bounds fitting preserves an already sufficient camera and rejects invalid bounds", () => {
+const identity = new Float32Array([
+  1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+])
+
+test("scene fitting preserves sufficient cameras and handles unusable inputs", () => {
   const camera = {
     camPos: [100, 100, 100],
     lookAt: [0, 0, 0],
     fov: 50,
   } as const
+  const draw = {
+    positions: new Float32Array([-1, -1, -1, 1, 1, 1]),
+    model: identity,
+  }
+  expect(fitCameraToScene([draw], camera, 1)).toBe(camera)
+  expect(fitCameraToScene([], camera, 1)).toBe(camera)
   expect(
-    fitCameraToBounds({ min: [-1, -1, -1], max: [1, 1, 1] }, camera, 1),
+    fitCameraToScene(
+      [{ ...draw, positions: new Float32Array([Infinity, 0, 0]) }],
+      camera,
+      1,
+    ),
   ).toBe(camera)
-  expect(
-    fitCameraToBounds({ min: [Infinity, 0, 0], max: [1, 1, 1] }, camera, 1),
-  ).toBe(camera)
-  expect(fitCameraToBounds({ min: [2, 0, 0], max: [1, 1, 1] }, camera, 1)).toBe(
-    camera,
-  )
+  expect(fitCameraToScene([draw], camera, 0)).toBe(camera)
+  expect(fitCameraToScene([draw], camera, Number.NaN)).toBe(camera)
+  const poleCamera = { ...camera, camPos: [0, 100, 0] as const }
+  expect(fitCameraToScene([draw], poleCamera, 1)).toBe(poleCamera)
 })
 
-test("model-only and translated assemblies target actual exported bounds", async () => {
+test("diagonal geometry fits tightly without fitting empty AABB corners", () => {
+  const draw = {
+    positions: new Float32Array([-10, -10, 10, 10, 10, -10]),
+    model: identity,
+  }
+  const camera = fitCameraToScene(
+    [draw],
+    { camPos: [0, 0, 3], lookAt: [0, 0, 0], fov: 50 },
+    1,
+  )
+  const tangent = Math.tan((50 * Math.PI) / 360)
+  const projected = []
+  for (let i = 0; i < draw.positions.length; i += 3) {
+    const depth = camera.camPos[2] - draw.positions[i + 2]!
+    projected.push((draw.positions[i]! - camera.camPos[0]) / (depth * tangent))
+  }
+  expect(Math.min(...projected)).toBeCloseTo(-0.9, 5)
+  expect(Math.max(...projected)).toBeCloseTo(0.9, 5)
+  expect(camera.lookAt[0]).toBeLessThan(-1)
+  expect(camera.camPos[2]).toBeLessThan(10 + 10 / (tangent * 0.9))
+})
+
+test("model-only and translated assemblies fit their actual vertices", async () => {
   const modelOnly = tallAssembly.filter((item) => item.type !== "pcb_board")
   const translated = tallAssembly.map((item) => {
     if (item.type === "pcb_board")
@@ -135,16 +164,39 @@ test("model-only and translated assemblies target actual exported bounds", async
   })
   for (const circuit of [modelOnly, translated]) {
     const mesh = await convertCircuitJsonTo3dGlb(circuit)
-    const measured = computeWorldAABB(
-      (await loadGlbScene(mesh.slice().buffer)).drawCalls,
-    )
+    const scene = await loadGlbScene(mesh.slice().buffer)
     const camera = await getDefaultCameraForCircuitJson(circuit, {
       width: 320,
       height: 480,
     })
-    expect([...camera.lookAt]).toEqual(
-      measured.min.map((v, i) => (v + measured.max[i]!) / 2),
+    const { view, proj } = buildCamera(
+      scene.drawCalls,
+      320,
+      480,
+      camera.fov,
+      camera.camPos,
+      camera.lookAt,
     )
+    for (const draw of scene.drawCalls) {
+      for (let i = 0; i < draw.positions.length; i += 3) {
+        const clip = transform(
+          proj,
+          transform(
+            view,
+            transform(draw.model, [
+              draw.positions[i]!,
+              draw.positions[i + 1]!,
+              draw.positions[i + 2]!,
+              1,
+            ]),
+          ),
+        )
+        expect(clip[3]!).toBeGreaterThan(0)
+        expect(
+          Math.max(...clip.slice(0, 3).map((v) => Math.abs(v / clip[3]!))),
+        ).toBeLessThan(1)
+      }
+    }
     expect(camera.camPos.every(Number.isFinite)).toBe(true)
   }
 }, 60_000)
