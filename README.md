@@ -43,6 +43,9 @@ loads models to measure their actual bounds; pass `modelPathBaseDir`,
 `projectBaseUrl`, or `authHeaders` as for rendering when needed. Its optional
 `width`, `height`, and `cameraPreset` match the intended render.
 
+For large imported OBJ models, use `circuit-json-to-gltf` 0.0.133 or later.
+Earlier versions can overflow 16-bit mesh indices and distort the geometry.
+
 ## Package contents
 
 The published package ships compiled ESM output from `dist/` plus TypeScript declarations.
