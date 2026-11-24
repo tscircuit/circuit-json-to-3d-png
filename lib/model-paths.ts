@@ -35,13 +35,24 @@ const getDefaultBaseDir = (): string | undefined => {
   return undefined
 }
 
+const encodePathForUrl = (value: string): string =>
+  value
+    .replace(/\\/g, "/")
+    .split("/")
+    .map((segment, index) =>
+      index === 1 && /^[a-zA-Z]:$/.test(segment)
+        ? segment
+        : encodeURIComponent(segment),
+    )
+    .join("/")
+
 const toFileUrl = (value: string): string => {
   const normalizedPath = value.replace(/\\/g, "/")
   const pathname = isWindowsAbsolutePath(value)
     ? `/${normalizedPath}`
     : normalizedPath
 
-  return new URL(`file://${encodeURI(pathname)}`).href
+  return new URL(`file://${encodePathForUrl(pathname)}`).href
 }
 
 const toDirectoryUrl = (value: string): string => {
@@ -80,7 +91,10 @@ export const normalizeModelUrls = (
       } else if (!baseDir) {
         updated[key] = value
       } else {
-        updated[key] = new URL(value, toDirectoryUrl(baseDir)).href
+        updated[key] = new URL(
+          encodePathForUrl(value),
+          toDirectoryUrl(baseDir),
+        ).href
       }
     }
 
